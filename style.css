@@ -1,0 +1,278 @@
+/* =========================================================
+   SNK IT INSTITUTE — USHA AI SCRIPT.JS
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const chatbot = document.getElementById("chatbot");
+
+    const ushaFloating = document.getElementById("ushaFloating");
+
+    const openUshaBanner = document.getElementById("openUshaBanner");
+
+    const navUsha = document.getElementById("navUsha");
+
+    const closeChat = document.getElementById("closeChat");
+
+
+    /* =====================================================
+       OPEN USHA
+    ===================================================== */
+
+    function openUSHA() {
+
+        if (!chatbot) return;
+
+        chatbot.classList.add("active");
+
+        chatbot.setAttribute("aria-hidden", "false");
+
+        document.body.classList.add("usha-open");
+
+    }
+
+
+    /* =====================================================
+       CLOSE USHA
+    ===================================================== */
+
+    function closeUSHA() {
+
+        if (!chatbot) return;
+
+        chatbot.classList.remove("active");
+
+        chatbot.setAttribute("aria-hidden", "true");
+
+        document.body.classList.remove("usha-open");
+
+    }
+
+
+    /* =====================================================
+       FLOATING USHA BUTTON
+    ===================================================== */
+
+    if (ushaFloating) {
+
+        ushaFloating.addEventListener("click", function () {
+
+            openUSHA();
+
+        });
+
+    }
+
+
+    /* =====================================================
+       USHA BANNER BUTTON
+    ===================================================== */
+
+    if (openUshaBanner) {
+
+        openUshaBanner.addEventListener("click", function () {
+
+            openUSHA();
+
+        });
+
+    }
+
+
+    /* =====================================================
+       NAV USHA BUTTON
+    ===================================================== */
+
+    if (navUsha) {
+
+        navUsha.addEventListener("click", function (event) {
+
+            event.preventDefault();
+
+            openUSHA();
+
+        });
+
+    }
+
+
+    /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
+
+    if (closeChat) {
+
+        closeChat.addEventListener("click", function () {
+
+            closeUSHA();
+
+        });
+
+    }
+
+
+    /* =====================================================
+       CLICK OUTSIDE CHAT
+    ===================================================== */
+
+    document.addEventListener("click", function (event) {
+
+        if (!chatbot) return;
+
+        if (!chatbot.classList.contains("active")) return;
+
+
+        const clickedInsideChat =
+            chatbot.contains(event.target);
+
+        const clickedFloating =
+            ushaFloating &&
+            ushaFloating.contains(event.target);
+
+        const clickedBanner =
+            openUshaBanner &&
+            openUshaBanner.contains(event.target);
+
+        const clickedNav =
+            navUsha &&
+            navUsha.contains(event.target);
+
+
+        if (
+            !clickedInsideChat &&
+            !clickedFloating &&
+            !clickedBanner &&
+            !clickedNav
+        ) {
+
+            closeUSHA();
+
+        }
+
+    });
+
+
+    /* =====================================================
+       ESC KEY — CLOSE USHA
+    ===================================================== */
+
+    document.addEventListener("keydown", function (event) {
+
+        if (event.key === "Escape") {
+
+            closeUSHA();
+
+        }
+
+    });
+
+
+    /* =====================================================
+       FOOTER YEAR
+    ===================================================== */
+
+    const yearElement =
+        document.getElementById("year");
+
+    if (yearElement) {
+
+        yearElement.textContent =
+            new Date().getFullYear();
+
+    }
+
+
+    /* =====================================================
+       QUICK QUESTION FUNCTION
+       ===================================================== */
+
+    window.quickQuestion = function (question) {
+
+        console.log("USHA Question:", question);
+
+        openUSHA();
+
+
+        /*
+         * ভবিষ্যতে এখানে AI API
+         * অথবা automatic reply
+         * যোগ করা যাবে।
+         */
+
+    };
+
+
+    /* =====================================================
+       PREVENT EMPTY CHAT ACTION
+       ===================================================== */
+
+    const chatForm =
+        document.getElementById("chatForm");
+
+    const chatInput =
+        document.getElementById("chatInput");
+
+
+    if (chatForm && chatInput) {
+
+        chatForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const message =
+                chatInput.value.trim();
+
+
+            if (!message) {
+
+                return;
+
+            }
+
+
+            console.log(
+                "USHA User Message:",
+                message
+            );
+
+
+            /*
+             * এখন message শুধু console-এ যাবে।
+             *
+             * পরে এখানে real AI response
+             * যোগ করা যাবে।
+             */
+
+
+            chatInput.value = "";
+
+        });
+
+    }
+
+
+    /* =====================================================
+       INITIAL STATE
+    ===================================================== */
+
+    if (chatbot) {
+
+        chatbot.classList.remove("active");
+
+        chatbot.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+    }
+
+
+    console.log(
+        "USHA AI loaded successfully."
+    );
+
+});
